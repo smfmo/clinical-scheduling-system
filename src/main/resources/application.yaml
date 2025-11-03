@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: agendaconsultas
+  datasource:
+    url: jdbc:postgresql://localhost:5433/agendamentoclinico
+    password: 123456
+    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
