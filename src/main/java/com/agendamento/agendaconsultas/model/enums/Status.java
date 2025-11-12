@@ -1,7 +1,9 @@
 package com.agendamento.agendaconsultas.model.enums;
 
 public enum Status {
-    MARCADA,
+    AGENDADA,
+    CONFIRMADA,
+    REALIZADA,
     CANCELADA,
-    REALIZADA
+    PENDENTE
 }

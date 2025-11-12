@@ -1,6 +1,8 @@
 package com.agendamento.agendaconsultas.controller;
 
 import com.agendamento.agendaconsultas.model.Consultation;
+import com.agendamento.agendaconsultas.model.Doctor;
+import com.agendamento.agendaconsultas.model.Patient;
 import com.agendamento.agendaconsultas.model.enums.Specialty;
 import com.agendamento.agendaconsultas.service.ConsultationService;
 import com.agendamento.agendaconsultas.service.DoctorService;
@@ -8,6 +10,8 @@ import com.agendamento.agendaconsultas.service.PatientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -53,9 +57,22 @@ public class ConsultationController {
         return "information-consultation";
     }
 
+    @GetMapping("/list")
+    public String listConsultations(Model model) {
+        List<Consultation> consultations = consultationService.findAll();
+        List<Patient> patients = patientService.findAll();
+        List<Doctor> doctors = doctorService.findAll();
+
+        model.addAttribute("consultations", consultations);
+        model.addAttribute("patients", patients);
+        model.addAttribute("doctors", doctors);
+
+        return "consultations-list";
+    }
+
     @GetMapping("/deleteConsultation/{consultationId}")
     public String deleteConsultation(@PathVariable(name = "consultationId") UUID consultationId) {
         consultationService.deleteConsultation(consultationId);
-        return "redirect/inicio";
+        return "redirect:/inicio";
     }
 }

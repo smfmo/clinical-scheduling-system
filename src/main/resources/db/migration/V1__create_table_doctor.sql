@@ -5,6 +5,5 @@ CREATE TABLE doctor (
     telephone VARCHAR(20),
     date_birthday DATE,
     crm VARCHAR(20) NOT NULL UNIQUE,
-    specialty VARCHAR(50) NOT NULL,
-    CONSTRAINT chk_specialty CHECK (specialty IN ('CARDIOLOGIA', 'DERMATOLOGIA', 'GINECOLOGIA', 'ORTOPEDIA', 'PEDIATRIA', 'CLINICA_GERAL'))
+    specialty VARCHAR(50) NOT NULL
 );

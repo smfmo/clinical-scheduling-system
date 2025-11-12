@@ -26,7 +26,7 @@ public class DoctorController {
     @PostMapping
     public String registerDoctor(@ModelAttribute(name = "doctor") Doctor doctor) {
         service.registerDoctor(doctor);
-        return "redirect/inicio";
+        return "redirect:/inicio";
     }
 
     @GetMapping("/{doctorId}")
@@ -39,6 +39,6 @@ public class DoctorController {
     @GetMapping("/deleteDoctor/{doctorId}")
     public String deleteDoctor(@PathVariable(name = "doctorId") UUID doctorId) {
         service.deleteDoctor(doctorId);
-        return "redirect/inicio";
+        return "redirect:/inicio";
     }
 }

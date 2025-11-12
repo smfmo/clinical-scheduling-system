@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Consultas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1da6b3;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 40px;
+        }
+
+        header img {
+            height: 50px;
+            width: 50px;
+            object-fit: contain;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            color: #1da6b3;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #1da6b3;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #148a93;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            font-size: 0.9rem;
+            padding: 8px 15px;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+            font-size: 0.9rem;
+            padding: 8px 15px;
+        }
+
+        .btn-info:hover {
+            background-color: #138496;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-collapse: collapse;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #1da6b3;
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        td {
+            color: #333;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-MARCADA {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-CANCELADA {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-REALIZADA {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-message p {
+            color: #6c757d;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img th:src="@{/images/Logo-MedLink-Branca.png}" alt="Logo">
+    <h1>Sistema de Agendamento</h1>
+</header>
+
+<div class="container">
+    <h2>Lista de Consultas</h2>
+
+    <div class="actions">
+        <a th:href="@{/consultations}" class="btn btn-primary">+ Nova Consulta</a>
+        <a th:href="@{/inicio}" class="btn btn-secondary">Voltar ao Início</a>
+    </div>
+
+    <div th:if="${consultations != null and !consultations.isEmpty()}">
+        <table>
+            <thead>
+            <tr>
+                <th>Paciente</th>
+                <th>Médico</th>
+                <th>Especialidade</th>
+                <th>Data</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="consultation : ${consultations}">
+                <td>
+            <span th:each="patient : ${patients}"
+                  th:if="${patient.id == consultation.patientId}"
+                  th:text="${patient.name}">
+            </span>
+                </td>
+                <td>
+            <span th:each="doctor : ${doctors}"
+                  th:if="${doctor.id == consultation.doctorId}"
+                  th:text="${doctor.name}">
+            </span>
+                </td>
+                <td>
+            <span th:each="doctor : ${doctors}"
+                  th:if="${doctor.id == consultation.doctorId}"
+                  th:text="${doctor.specialty}">
+            </span>
+                </td>
+                <td th:text="${#temporals.format(consultation.consultationDate, 'dd/MM/yyyy')}">Data</td>
+                <td>
+            <span class="status"
+                  th:classappend="'status-' + ${consultation.status}"
+                  th:text="${consultation.status}">
+              Status
+            </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${consultations == null or consultations.isEmpty()}" class="empty-message">
+        <p>📅 Nenhuma consulta cadastrada ainda.</p>
+        <a th:href="@{/consultations}" class="btn btn-primary">Agendar Primeira Consulta</a>
+    </div>
+</div>
+
+</body>
+</html>

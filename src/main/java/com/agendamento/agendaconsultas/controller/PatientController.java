@@ -26,14 +26,14 @@ public class PatientController {
     @PostMapping
     public String registerPatient(@ModelAttribute(name = "patient") Patient patient) {
         service.registerPatient(patient);
-        return "redirect:/consultation-form";
+        return "redirect:/consultations";
     }
 
     @GetMapping("/{patientId}")
     public String getPatient(@PathVariable(name = "patientId") UUID patientId, Model model) {
         Patient patient = service.findById(patientId);
         model.addAttribute("patient", patient);
-        return "patient-information";
+        return "patient-form";
     }
 
     public String deletePatient(@PathVariable(name = "patientId") UUID patientId) {

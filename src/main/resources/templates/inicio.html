@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulário de Cadastro Médico</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f6f8fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #1da6b3;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 40px;
+    }
+
+    header img {
+      height: 50px;
+      width: 50px;
+      object-fit: contain;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    main {
+      background: white;
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h2 {
+      color: #1da6b3;
+      margin-bottom: 15px;
+      font-size: 1.8rem;
+    }
+
+    p {
+      color: #555;
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+    }
+
+    .btn-start {
+      background-color: #1da6b3;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin: 10px;
+    }
+
+    .btn-start:hover {
+      background-color: #148a93;
+    }
+
+    .buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <img
+          th:src="@{/images/Logo-MedLink-Branca.png}"
+          alt="Logo do Centro Médico"
+  />
+  <h1>Formulário Médico</h1>
+</header>
+
+<main>
+  <h2>Sistema de Agendamento Médico</h2>
+  <p>Escolha uma das opções abaixo para gerenciar pacientes e consultas.</p>
+
+  <div class="buttons-container">
+    <a th:href="@{/patients}" class="btn-start">Cadastrar Paciente</a>
+    <a th:href="@{/consultations}" class="btn-start">Agendar Consulta</a>
+    <a th:href="@{/consultations/list}" class="btn-start">Listar Consultas</a>
+    <a th:href="@{/doctors}" class="btn-start">Gerenciar Médicos</a>
+  </div>
+</main>
+</body>
+</html>

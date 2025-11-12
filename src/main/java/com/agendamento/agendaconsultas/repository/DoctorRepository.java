@@ -11,6 +11,6 @@ import java.util.UUID;
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
 
-    @Query("SELECT d FROM Doctor d WHERE d.specialty = :speciality")
+    @Query("SELECT d FROM Doctor d WHERE d.specialty = :specialty")
     List<Doctor> searchBySpeciality(Specialty specialty);
 }
