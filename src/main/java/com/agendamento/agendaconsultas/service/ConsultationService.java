@@ -4,7 +4,7 @@ import com.agendamento.agendaconsultas.model.Consultation;
 import com.agendamento.agendaconsultas.repository.ConsultationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,6 +26,18 @@ public class ConsultationService {
     public Consultation create(Consultation consultation) {
         validate(consultation.getPatientId(), consultation.getDoctorId());
         return consultationRepository.save(consultation);
+    }
+
+    public List<Consultation> findAll() {
+        return consultationRepository.findAll();
+    }
+
+    public Consultation getById(UUID consultationId) {
+        return consultationRepository.findById(consultationId).orElse(null);
+    }
+
+    public void deleteConsultation(UUID consultationId) {
+        consultationRepository.deleteById(consultationId);
     }
 
     private void validate(UUID doctorId, UUID patientId) {
