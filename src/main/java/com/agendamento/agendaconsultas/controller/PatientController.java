@@ -2,13 +2,12 @@ package com.agendamento.agendaconsultas.controller;
 
 import com.agendamento.agendaconsultas.model.Patient;
 import com.agendamento.agendaconsultas.service.PatientService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping("/patients")
 public class PatientController {
 
@@ -18,9 +17,27 @@ public class PatientController {
         this.service = service;
     }
 
+    @GetMapping
+    public String form(Model model) {
+        model.addAttribute("patient",  new Patient());
+        return "patient-form";
+    }
+
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody Patient patient) {
-        service.create(patient);
-        return ResponseEntity.created(null).build();
+    public String registerPatient(@ModelAttribute(name = "patient") Patient patient) {
+        service.registerPatient(patient);
+        return "redirect:/consultation-form";
+    }
+
+    @GetMapping("/{patientId}")
+    public String getPatient(@PathVariable(name = "patientId") UUID patientId, Model model) {
+        Patient patient = service.findById(patientId);
+        model.addAttribute("patient", patient);
+        return "patient-information";
+    }
+
+    public String deletePatient(@PathVariable(name = "patientId") UUID patientId) {
+        service.deletePatient(patientId);
+        return "redirect:/inicio";
     }
 }
