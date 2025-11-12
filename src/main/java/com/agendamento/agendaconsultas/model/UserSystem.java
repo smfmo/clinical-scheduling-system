@@ -3,7 +3,6 @@ package com.agendamento.agendaconsultas.model;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDate;
 
 @MappedSuperclass
